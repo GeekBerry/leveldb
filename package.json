@@ -1,0 +1,23 @@
+{
+  "name": "leveldb",
+  "version": "0.0.0",
+  "license": "MIT",
+  "keywords": [
+    "rocksdb",
+    "backend"
+  ],
+  "main": "src/LevelDB.js",
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "level-party": "^4.0.0"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "public": "yarn publish --access=public"
+  }
+}
