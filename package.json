@@ -1,6 +1,6 @@
 {
-  "name": "leveldb",
-  "version": "0.0.0",
+  "name": "@geekberry/leveldb",
+  "version": "0.0.1",
   "author": "<geekberry@qq.com>",
   "license": "MIT",
   "repository": "https://github.com/GeekBerry/leveldb.git",
