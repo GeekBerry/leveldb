@@ -1,7 +1,9 @@
 {
   "name": "leveldb",
   "version": "0.0.0",
+  "author": "<geekberry@qq.com>",
   "license": "MIT",
+  "repository": "https://github.com/GeekBerry/leveldb.git",
   "keywords": [
     "rocksdb",
     "backend"
