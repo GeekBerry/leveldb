@@ -5,15 +5,15 @@
   "license": "MIT",
   "repository": "https://github.com/GeekBerry/leveldb.git",
   "keywords": [
-    "rocksdb",
-    "backend"
+    "leveldb",
+    "levelup"
   ],
   "main": "src/LevelDB.js",
   "files": [
     "src"
   ],
   "dependencies": {
-    "level-party": "^4.0.0"
+    "leveldown": "^5.6.0"
   },
   "devDependencies": {
     "jest": "^25.1.0"

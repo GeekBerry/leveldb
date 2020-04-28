@@ -10,10 +10,10 @@ beforeAll(async () => {
   await database.clear();
 });
 
-test('set get del', async () => {
+test('put get del', async () => {
   expect(await database.get('key')).toEqual(undefined);
 
-  expect(await database.set('key', 'value')).toEqual(undefined);
+  expect(await database.put('key', 'value')).toEqual(undefined);
 
   expect(await database.get('key')).toEqual('value');
 
