@@ -1,7 +1,9 @@
-const DataBase = require('../');
+const RocksDBLevelDown = require('rocksdb');
+const levelDB = require('../index');
 
-const database = new DataBase({
-  location: './DATA',
+const database = new levelDB({
+  LevelDown: RocksDBLevelDown,
+  location: './DATA/ROCKS_DB',
   asBuffer: false,
 });
 

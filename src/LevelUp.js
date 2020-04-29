@@ -1,21 +1,9 @@
 const { promisify } = require('util');
 const LevelDBLevelDown = require('leveldown');
+const LevelInterface = require('./LevelInterface');
+const { promisifyResults } = require('./util');
 
-function promisifyResults(func) {
-  return function (...args) {
-    return new Promise((resolve, reject) => {
-      func.call(this, ...args, (error, ...results) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(results);
-        }
-      });
-    });
-  };
-}
-
-class LevelDB {
+class LevelUP extends LevelInterface {
   /**
    * @param options {object}
    * @param options.location {string}
@@ -43,7 +31,9 @@ class LevelDB {
     syncBatch = false,
     ...rest
   } = {}) {
-    const levelDown = LevelDown ? new LevelDown(location) : new LevelDBLevelDown(location);
+    super();
+
+    const levelDown = LevelDown === undefined ? new LevelDBLevelDown(location) : new LevelDown(location);
     levelDown.open = promisify(levelDown.open);
     levelDown.get = promisify(levelDown.get);
     levelDown.batch = promisify(levelDown.batch);
@@ -94,23 +84,10 @@ class LevelDB {
     }
   }
 
-  /**
-   * @see https://github.com/Level/leveldown#dbiteratoroptions
-   * @param options {object}
-   * @param [options.gt] {Buffer|string}
-   * @param [options.gte] {Buffer|string}
-   * @param [options.lt] {Buffer|string}
-   * @param [options.lte] {Buffer|string}
-   * @param [options.limit=-1] {number}
-   * @param [options.reverse=false] {boolean}
-   * @param [options.keys=true] {boolean}
-   * @param [options.values=true] {boolean}
-   * @return {Promise<[]>}
-   */
-  async list(options = {}) {
+  async list(filter = {}) {
     const levelDown = await this.levelDown;
 
-    const iter = levelDown.iterator({ ...this.iterOptions, ...options });
+    const iter = levelDown.iterator({ ...this.iterOptions, ...filter });
     iter.end = promisify(iter.end);
     iter.next = promisifyResults(iter.next);
 
@@ -123,13 +100,13 @@ class LevelDB {
     return array;
   }
 
-  async keys(options = {}) {
-    const array = await this.list({ ...options, values: false });
+  async keys(filter = {}) {
+    const array = await this.list({ ...filter, values: false });
     return array.map(each => each.key);
   }
 
-  async values(options = {}) {
-    const array = await this.list({ ...options, keys: false });
+  async values(filter = {}) {
+    const array = await this.list({ ...filter, keys: false });
     return array.map(each => each.value);
   }
 
@@ -140,4 +117,4 @@ class LevelDB {
   }
 }
 
-module.exports = LevelDB;
+module.exports = LevelUP;
