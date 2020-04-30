@@ -7,17 +7,17 @@ class Server {
    * @param options {object}
    * @param options.database {object}
    * @param options.readOnly {boolean}
-   * @param rest.host {string}
-   * @param rest.port {number}
+   * @param options.host {string}
+   * @param options.port {number}
    */
-  constructor({ database, readOnly, ...rest }) {
+  constructor({ database, readOnly, ...options }) {
     if (!(database instanceof LevelInterface)) {
       throw new Error('database must be instance of LevelInterface');
     }
 
     this.database = database;
     this.readOnly = readOnly;
-    this.server = new BufferServer(rest, this.middleware.bind(this));
+    this.bufferServer = new BufferServer(options, this.middleware.bind(this));
 
     this.CODE_TO_METHOD = {
       [CODE.PUT]: this.onPut.bind(this),
@@ -153,7 +153,7 @@ class Server {
 
   // --------------------------------------------------------------------------
   async close() {
-    await this.server.close();
+    await this.bufferServer.close();
   }
 }
 

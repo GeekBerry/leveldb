@@ -6,15 +6,15 @@ class Client extends LevelInterface {
   /**
    * @param options {object}
    * @param [options.asBuffer=true] {boolean}
-   * @param rest.host {string}
-   * @param rest.port {number}
+   * @param options.host {string}
+   * @param options.port {number}
    */
-  constructor({ asBuffer = true, readOnly, ...rest }) {
+  constructor({ asBuffer = true, readOnly, ...options }) {
     super();
 
     this.asBuffer = asBuffer;
     this.readOnly = readOnly;
-    this.client = new BufferClient(rest);
+    this.bufferClient = new BufferClient(options);
   }
 
   _writeFilter(code, { reverse = false, limit = -1, gt, gte, lte, lt } = {}) {
@@ -46,7 +46,7 @@ class Client extends LevelInterface {
     input.writeBuffer(toBuffer(key));
     input.writeBuffer(toBuffer(value));
 
-    await this.client.request(input);
+    await this.bufferClient.request(input);
   }
 
   async del(key) {
@@ -56,7 +56,7 @@ class Client extends LevelInterface {
     input.writeInt(CODE.DEL);
     input.writeBuffer(toBuffer(key));
 
-    await this.client.request(input);
+    await this.bufferClient.request(input);
   }
 
   async batch(array) {
@@ -84,14 +84,14 @@ class Client extends LevelInterface {
       }
     });
 
-    await this.client.request(input);
+    await this.bufferClient.request(input);
   }
 
   async clear(filter) {
     this.checkReadOnly();
 
     const input = this._writeFilter(CODE.CLEAR, filter);
-    await this.client.request(input);
+    await this.bufferClient.request(input);
   }
 
   // --------------------------------------------------------------------------
@@ -100,7 +100,7 @@ class Client extends LevelInterface {
     input.writeInt(CODE.GET);
     input.writeBuffer(toBuffer(key));
 
-    const output = await this.client.request(input);
+    const output = await this.bufferClient.request(input);
 
     let value = output.length ? output.readBuffer() : undefined;
     if (!this.asBuffer) {
@@ -113,7 +113,7 @@ class Client extends LevelInterface {
   async list(filter = {}) {
     const input = this._writeFilter(CODE.LIST, filter);
 
-    const output = await this.client.request(input);
+    const output = await this.bufferClient.request(input);
 
     const length = output.readInt();
     const array = [];
@@ -133,7 +133,7 @@ class Client extends LevelInterface {
   async keys(filter = {}) {
     const input = this._writeFilter(CODE.KEYS, filter);
 
-    const output = await this.client.request(input);
+    const output = await this.bufferClient.request(input);
 
     const length = output.readInt();
     const array = [];
@@ -151,7 +151,7 @@ class Client extends LevelInterface {
   async values(filter = {}) {
     const input = this._writeFilter(CODE.VALUES, filter);
 
-    const output = await this.client.request(input);
+    const output = await this.bufferClient.request(input);
 
     const length = output.readInt();
     const array = [];
@@ -168,7 +168,7 @@ class Client extends LevelInterface {
 
   // --------------------------------------------------------------------------
   async close() {
-    await this.client.close();
+    await this.bufferClient.close();
   }
 }
 

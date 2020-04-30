@@ -85,5 +85,5 @@ test('batch list', async () => {
 afterAll(async () => {
   await database.close();
   await server.close();
-  // await client.close(); once server close, all client should be close
+  await client.close();
 });
