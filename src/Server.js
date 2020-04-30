@@ -16,14 +16,14 @@ class Server {
     }
 
     this.database = database;
+    this.readOnly = readOnly;
     this.server = new BufferServer(rest, this.middleware.bind(this));
 
     this.CODE_TO_METHOD = {
-      [CODE.PUT]: readOnly ? this.onReadOnly.bind(this) : this.onPut.bind(this),
-      [CODE.DEL]: readOnly ? this.onReadOnly.bind(this) : this.onDel.bind(this),
-      [CODE.BATCH]: readOnly ? this.onReadOnly.bind(this) : this.onBatch.bind(this),
-      [CODE.CLEAR]: readOnly ? this.onReadOnly.bind(this) : this.onClear.bind(this),
-
+      [CODE.PUT]: this.onPut.bind(this),
+      [CODE.DEL]: this.onDel.bind(this),
+      [CODE.BATCH]: this.onBatch.bind(this),
+      [CODE.CLEAR]: this.onClear.bind(this),
       [CODE.GET]: this.onGet.bind(this),
       [CODE.LIST]: this.onList.bind(this),
       [CODE.KEYS]: this.onKeys.bind(this),
@@ -33,13 +33,19 @@ class Server {
 
   _readFilter(stream) {
     return {
-      reverse: stream.readInt(),
+      reverse: stream.readBool(),
       limit: stream.readInt(),
       gt: stream.readBuffer(),
       gte: stream.readBuffer(),
       lte: stream.readBuffer(),
       lt: stream.readBuffer(),
     };
+  }
+
+  checkReadOnly() {
+    if (this.readOnly) {
+      throw new Error('client is read only');
+    }
   }
 
   // ==========================================================================
@@ -55,12 +61,9 @@ class Server {
   }
 
   // --------------------------------------------------------------------------
-  onReadOnly() {
-    throw new Error('server is read only');
-  }
-
-  // --------------------------------------------------------------------------
   async onPut(input) {
+    this.checkReadOnly();
+
     const key = input.readBuffer();
     const value = input.readBuffer();
 
@@ -68,12 +71,16 @@ class Server {
   }
 
   async onDel(input) {
+    this.checkReadOnly();
+
     const key = input.readBuffer();
 
     await this.database.del(key);
   }
 
   async onBatch(input) {
+    this.checkReadOnly();
+
     const array = [];
 
     const length = input.readInt();
@@ -97,6 +104,8 @@ class Server {
   }
 
   async onClear(input) {
+    this.checkReadOnly();
+
     const filter = this._readFilter(input);
     await this.database.clear(filter);
   }

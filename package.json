@@ -17,7 +17,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@geekberry/buffer-socket": "0.0.2",
+    "@geekberry/buffer-socket": "0.0.3",
     "leveldown": "^5.6.0"
   },
   "devDependencies": {

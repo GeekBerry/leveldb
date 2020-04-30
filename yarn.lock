@@ -209,10 +209,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@geekberry/buffer-socket@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@geekberry/buffer-socket/-/buffer-socket-0.0.2.tgz#af913e85c5b1fe6715b5ccd994110df9f519fc5d"
-  integrity sha512-OmynaVe0Mns+3RJXQ3VQg8J8fFcgfEcJ6M6KZJzVgQ/ob2NJSJZDeWHFo+RKVXy2XtE0PHOsbGn0CKw0Ex0ILw==
+"@geekberry/buffer-socket@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@geekberry/buffer-socket/-/buffer-socket-0.0.3.tgz#909aa759ee69af27c730e54b4f97a533f885dce1"
+  integrity sha512-I62fBAUZOKnuQW431F6UBzChnhxPczprYygvvT40JSABKhFtDPsCSrbl4tGk9xjEBMnMHKCxjbnCj9NpcjzGlg==
   dependencies:
     ws "^7.2.3"
 

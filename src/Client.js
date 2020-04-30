@@ -17,18 +17,11 @@ class Client extends LevelInterface {
     this.client = new BufferClient(rest);
   }
 
-  _writeFilter(code, {
-    reverse,
-    limit = -1,
-    gt,
-    gte,
-    lte,
-    lt,
-  } = {}) {
+  _writeFilter(code, { reverse = false, limit = -1, gt, gte, lte, lt } = {}) {
     const stream = new Stream();
 
     stream.writeInt(code);
-    stream.writeInt(reverse ? 1 : 0);
+    stream.writeBool(reverse);
     stream.writeInt(limit);
     stream.writeBuffer(toBuffer(gt));
     stream.writeBuffer(toBuffer(gte));
