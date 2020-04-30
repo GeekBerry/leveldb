@@ -2,7 +2,6 @@ const levelDB = require('../index');
 
 const database = new levelDB({
   location: './DATA/LEVEL_DB',
-  asBuffer: false,
 });
 
 // ----------------------------------------------------------------------------

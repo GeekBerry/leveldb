@@ -4,7 +4,6 @@ const levelDB = require('../index');
 const database = new levelDB({
   LevelDown: RocksDBLevelDown,
   location: './DATA/ROCKS_DB',
-  asBuffer: false,
 });
 
 // ----------------------------------------------------------------------------

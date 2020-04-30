@@ -8,7 +8,6 @@ const LevelDB = require('@geekberry/leveldb');
 async function main() {
   const database = new LevelDB({
     location: './DATA',
-    asBuffer: false,
   });
 
   await database.put('key', 'value');
@@ -24,7 +23,7 @@ async function main() {
     { type: 'put', key: 'key5', value: 'value5' },
   ]);
 
-  await database.list(); // {gte:'key1', lte:'key5',limit:5,reverse:true}
+  await database.list(); // {gte:'key1',lte:'key5',limit:5,reverse:true}
   // [
   //   { key: 'key1', value: 'value1' },
   //   { key: 'key3', value: 'value3' },

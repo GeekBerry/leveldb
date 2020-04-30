@@ -44,7 +44,7 @@ class Server {
 
   checkReadOnly() {
     if (this.readOnly) {
-      throw new Error('client is read only');
+      throw new Error('client is readOnly');
     }
   }
 

@@ -1,8 +1,8 @@
 const LevelDB = require('../index');
 
-const database = new LevelDB({ location: './DATA/LEVEL_CS', asBuffer: false });
+const database = new LevelDB({ location: './DATA/LEVEL_CS', asBuffer: true });
 const server = new LevelDB.Server({ host: '127.0.0.1', port: 6081, database });
-const client = new LevelDB.Client({ host: '127.0.0.1', port: 6081, asBuffer: false });
+const client = new LevelDB.Client({ host: '127.0.0.1', port: 6081 });
 
 // ----------------------------------------------------------------------------
 beforeAll(async () => {
@@ -15,6 +15,7 @@ test('put get del', async () => {
   expect(await client.put('key', 'value')).toEqual(undefined);
 
   expect(await client.get('key')).toEqual('value');
+  expect(await database.get('key')).toEqual(Buffer.from('value'));
 
   expect(await client.del('key')).toEqual(undefined);
 

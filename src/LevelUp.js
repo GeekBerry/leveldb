@@ -8,7 +8,7 @@ class LevelUP extends LevelInterface {
    * @param options {object}
    * @param options.location {string}
    * @param [options.LevelDown=`require('leveldown')`] {object} - `require('leveldown')` or `require('rocksdb')`
-   * @param [options.asBuffer=true] {string}
+   * @param [options.asBuffer=false] {string}
    * @param [options.cacheGet=true] {boolean}
    * @param [options.cacheIter=false] {boolean}
    * @param [options.syncPut=false] {boolean}
@@ -23,7 +23,7 @@ class LevelUP extends LevelInterface {
   constructor({
     LevelDown,
     location,
-    asBuffer = true,
+    asBuffer = false,
     cacheGet = true,
     cacheIter = false,
     syncPut = false,

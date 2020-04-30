@@ -5,11 +5,12 @@ const { CODE, toBuffer } = require('./util');
 class Client extends LevelInterface {
   /**
    * @param options {object}
-   * @param [options.asBuffer=true] {boolean}
+   * @param [options.asBuffer=false] {boolean}
+   * @param [options.readOnly=false] {boolean}
    * @param options.host {string}
    * @param options.port {number}
    */
-  constructor({ asBuffer = true, readOnly, ...options }) {
+  constructor({ asBuffer = false, readOnly = false, ...options }) {
     super();
 
     this.asBuffer = asBuffer;
@@ -33,7 +34,7 @@ class Client extends LevelInterface {
 
   checkReadOnly() {
     if (this.readOnly) {
-      throw new Error('client is read only');
+      throw new Error('client is readOnly');
     }
   }
 
