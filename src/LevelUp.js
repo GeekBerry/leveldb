@@ -15,7 +15,6 @@ class LevelDB extends LevelInterface {
     this.del = levelUp.del.bind(levelUp);
     this.batch = levelUp.batch.bind(levelUp);
     this.clear = levelUp.clear.bind(levelUp);
-    this.close = levelUp.close.bind(levelUp);
     this.levelUp = levelUp;
   }
 
@@ -50,6 +49,10 @@ class LevelDB extends LevelInterface {
 
   async values(filter = {}) {
     return this.list({ ...filter, keys: false });
+  }
+
+  async close() {
+    await this.levelUp.close();
   }
 }
 

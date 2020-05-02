@@ -6,6 +6,10 @@ const database = new levelDB({
   location: './DATA/LEVEL_PARTY',
 });
 
+const database2 = new levelDB({
+  LevelUp: LevelParty,
+  location: './DATA/LEVEL_PARTY',
+});
 // ----------------------------------------------------------------------------
 beforeAll(async () => {
   await database.clear();
@@ -85,5 +89,6 @@ test('batch list', async () => {
 });
 
 afterAll(async () => {
-  // await database.destroy();
+  await database.close();
+  await database2.close();
 });
