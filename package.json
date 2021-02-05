@@ -1,28 +1,22 @@
 {
   "name": "@geekberry/leveldb",
-  "version": "0.2.6",
+  "version": "1.0.0",
   "author": "<geekberry@qq.com>",
   "license": "MIT",
   "repository": "https://github.com/GeekBerry/leveldb.git",
   "keywords": [
-    "leveldb",
-    "levelup",
-    "websocket",
-    "client",
-    "server"
+    "leveldb"
   ],
   "main": "index.js",
   "files": [
-    "src",
     "index.js"
   ],
   "dependencies": {
-    "@geekberry/buffer-socket": "~0.0.5",
     "leveldown": "^5.6.0"
   },
   "devDependencies": {
+    "@types/node": "^14.14.25",
     "jest": "^25.1.0",
-    "level-party": "^4.0.0",
     "rocksdb": "^4.1.0"
   },
   "scripts": {

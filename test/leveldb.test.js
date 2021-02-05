@@ -1,16 +1,9 @@
-const LevelParty = require('level-party');
 const levelDB = require('../index');
 
 const database = new levelDB({
-  LevelUp: LevelParty,
-  location: './DATA/LEVEL_PARTY',
+  location: './data/leveldb',
 });
 
-const database2 = new levelDB({
-  LevelUp: LevelParty,
-  location: './DATA/LEVEL_PARTY',
-});
-// ----------------------------------------------------------------------------
 beforeAll(async () => {
   await database.clear();
 });
@@ -90,5 +83,4 @@ test('batch list', async () => {
 
 afterAll(async () => {
   await database.close();
-  await database2.close();
 });
