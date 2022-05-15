@@ -109,7 +109,7 @@ class LevelDB {
     try {
       return await levelDown.get(key, this.getOptions);
     } catch (e) {
-      if (e.message.startsWith('NotFound:')) {
+      if (e.message.startsWith('NotFound')) {
         return undefined;
       }
       throw e;

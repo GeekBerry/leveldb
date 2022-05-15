@@ -2,12 +2,14 @@
 
 LevelDB with promise. 
 
+* usage
+
 ```javascript
 const LevelDB = require('@geekberry/leveldb');
 
 async function main() {
   const database = new LevelDB({
-    location: './DATA',
+    location: './LevelDB',
   });
 
   await database.put('key', 'value');
@@ -39,4 +41,45 @@ async function main() {
 
   await database.clear();
 }
+
+main();
+```
+
+* using RocksDB as leveldown
+
+```javascript
+const LevelDB = require('@geekberry/leveldb');
+const RocksDBLevelDown = require('rocksdb');
+
+async function main() {
+  const database = new LevelDB({
+    levelDown: RocksDBLevelDown,
+    location: './RocksDB',
+  });
+
+  await database.put('key', 'value');
+  await database.get('key'); // 'value'
+  await database.del('key');
+}
+
+main();
+```
+
+* using memory as leveldown
+
+```javascript
+const LevelDB = require('@geekberry/leveldb');
+const MemoryLevelDown = require('memdown');
+
+async function main() {
+  const database = new LevelDB({
+    levelDown: MemoryLevelDown,
+  });
+
+  await database.put('key', 'value');
+  await database.get('key'); // 'value'
+  await database.del('key');
+}
+
+main();
 ```
